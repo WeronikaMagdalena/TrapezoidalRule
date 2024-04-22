@@ -1,6 +1,6 @@
 export class Model {
   constructor(
-    public expression: string = 'x^2 + 1',
+    public expression: string = 'x^2',
     public numberOfTrapezoids: number = 4,
     public start: number = 0,
     public end: number = 2

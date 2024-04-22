@@ -33,7 +33,6 @@ export class View {
 
   public draw(expression: string, numberOfTrapezoids: number, start: number, end: number): void {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.grid.draw(this.context);
     let minY = Infinity;
     let maxY = -Infinity;
     const step = (end - start) / (this.canvas.width * 50);
@@ -42,6 +41,7 @@ export class View {
       if (y < minY) minY = y;
       if (y > maxY) maxY = y;
     }
+    this.grid.draw(this.context, start, end, minY, maxY);
     const range = Math.max(maxY - minY, 0.0001);
     const yOffset = Math.abs(minY);
     const scaleY = this.canvas.height / range;

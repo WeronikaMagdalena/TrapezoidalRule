@@ -1,35 +1,56 @@
 export class Grid {
-  constructor(private size: number = 100, private strokeStyleLight: string = 'lightgrey', private strokeStyleDark: string = 'grey') {
-    this.size = size;
-    this.strokeStyleLight = strokeStyleLight;
-    this.strokeStyleDark = strokeStyleDark;
+  private gridStrokeStyle: string;
+  private labelFont: string;
+  private labelColor: string;
+
+  constructor() {
+    this.gridStrokeStyle = 'lightgrey';
+    this.labelFont = '10px Arial';
+    this.labelColor = 'black';
   }
-  public draw(context: CanvasRenderingContext2D) {
+
+  public draw(context: CanvasRenderingContext2D, minX: number, maxX: number, minY: number, maxY: number): void {
     const canvasWidth = context.canvas.width;
     const canvasHeight = context.canvas.height;
+    const yStep = this.calculateGridStep(minY, maxY, canvasHeight);
+    context.strokeStyle = this.gridStrokeStyle;
     context.beginPath();
-    for (let x = 0; x <= canvasWidth; x += this.size) {
-      context.moveTo(x, 0);
-      context.lineTo(x, canvasHeight);
+    for (let y = minY + yStep; y < maxY; y += yStep) {
+      const canvasY = canvasHeight - ((y - minY) / (maxY - minY) * canvasHeight);
+      context.moveTo(0, canvasY);
+      context.lineTo(canvasWidth, canvasY);
     }
-    for (let y = 0; y <= canvasHeight; y += this.size) {
-      context.moveTo(0, y);
-      context.lineTo(canvasWidth, y);
-    }
-    context.strokeStyle = this.strokeStyleLight;
     context.stroke();
-
+    const xStep = this.calculateGridStep(minX, maxX, canvasWidth);
     context.beginPath();
-    for (let x = 0; x <= canvasWidth; x += this.size * 10) {
-      context.moveTo(x, 0);
-      context.lineTo(x, canvasHeight);
+    for (let x = minX + xStep; x < maxX; x += xStep) {
+      const canvasX = (x - minX) / (maxX - minX) * canvasWidth;
+      context.moveTo(canvasX, 0);
+      context.lineTo(canvasX, canvasHeight);
     }
-    for (let y = 0; y <= canvasHeight; y += this.size * 10) {
-      context.moveTo(0, y);
-      context.lineTo(canvasWidth, y);
-    }
-
-    context.strokeStyle = this.strokeStyleDark;
     context.stroke();
+    context.font = this.labelFont;
+    context.fillStyle = this.labelColor;
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    for (let y = minY + yStep; y < maxY; y += yStep) {
+      const canvasY = canvasHeight - ((y - minY) / (maxY - minY) * canvasHeight);
+      context.fillText(y.toFixed(2), 30, canvasY);
+    }
+    for (let x = minX + xStep; x < maxX; x += xStep) {
+      const canvasX = (x - minX) / (maxX - minX) * canvasWidth;
+      context.fillText(x.toFixed(2), canvasX, canvasHeight - 10);
+    }
+  }
+
+  private calculateGridStep(min: number, max: number, length: number): number {
+    const range = max - min;
+    const numberOfSteps = 10;
+    const idealStep = range / numberOfSteps;
+    const exponent = Math.floor(Math.log10(idealStep));
+    const factor = Math.pow(10, exponent);
+    const rounded = Math.ceil(idealStep / factor) * factor;
+    const step = rounded.toFixed(10);
+    return parseFloat(step);
   }
 }
