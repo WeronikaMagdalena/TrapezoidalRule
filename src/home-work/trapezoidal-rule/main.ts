@@ -91,15 +91,30 @@ class View {
   public draw(expression: string, numberOfTrapezoids: number, start: number, end: number): void {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    const step = (end - start) / this.canvas.width; // Calculate step size based on canvas width
+    // Determine the minimum and maximum y-values of the function within the specified range
+    let minY = Infinity;
+    let maxY = -Infinity;
+    const step = (end - start) / (this.canvas.width * 50); // Calculate step size based on canvas width
+    for (let x = start; x <= end; x += step) {
+      const y = math.evaluate(expression, { x: x }); // Evaluate expression for current x value
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+    }
+
+    // Adjust the canvas height and y-coordinate calculation to fit the function
+    const range = Math.max(maxY - minY, 0.0001); // Ensuring range is not 0 to avoid division by zero
+    const yOffset = Math.abs(minY);
+    const scaleY = this.canvas.height / range;
+    this.context.fillStyle = 'blue';
 
     for (let x = start; x <= end; x += step) {
       const y = math.evaluate(expression, { x: x }); // Evaluate expression for current x value
       const canvasX = (x - start) * (this.canvas.width / (end - start)); // Scale x value to fit canvas width
-      const canvasY = this.canvas.height - (y * (this.canvas.height / (end - start))); // Scale y value to fit canvas height
+      const canvasY = this.canvas.height - ((y + yOffset) * scaleY); // Scale y value to fit canvas height
       this.context.fillRect(canvasX, canvasY, 1, 1); // Plot point on canvas
     }
   }
+
 }
 
 class Controller {
