@@ -18,9 +18,12 @@ export class View {
   }
 
   private setupEventListeners(): void {
-    this.inputs.forEach(input => {
-      const inputElement = document.querySelector(input.elementId) as HTMLInputElement;
-      inputElement.addEventListener('input', () => {
+    const inputForm = document.getElementById('inputForm') as HTMLFormElement;
+    inputForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      console.log('Submit click');
+      this.inputs.forEach(input => {
+        const inputElement = document.querySelector(input.elementId) as HTMLInputElement;
         let inputValue: string | number = inputElement.value;
         if (input.modelSetter === 'setNumberOfTrapezoids' || input.modelSetter === 'setStart' || input.modelSetter === 'setEnd') {
           inputValue = parseFloat(inputValue);

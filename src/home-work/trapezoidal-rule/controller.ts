@@ -19,7 +19,6 @@ export class Controller {
       const customEvent = event as CustomEvent;
       const action = customEvent.detail.action;
       const value = customEvent.detail.value;
-      console.log('Action:', action);
       console.log('Value:', value);
       this.updateModel(action, value);
       this.updateView(this.model.getExpression(), this.model.getNumberOfTrapezoids(), this.model.getStart(), this.model.getEnd())
