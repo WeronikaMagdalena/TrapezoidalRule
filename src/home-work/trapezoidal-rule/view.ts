@@ -52,7 +52,7 @@ export class View {
     }
   }
 
-  updateCalculationResultTable(areas: number[], totalArea: number): void {
+  public updateCalculationResultTable(areas: number[], totalArea: number): void {
     const resultTableBody = document.getElementById('calculationTableBody');
     const totalAreaSpan = document.getElementById('totalArea');
     if (!resultTableBody || !totalAreaSpan) return;
@@ -61,11 +61,17 @@ export class View {
 
     areas.forEach((area, index) => {
       const row = document.createElement('tr');
-      row.innerHTML = `<td>Trapezoid ${index + 1}</td><td>${area}</td>`;
+      const cell1 = document.createElement('td');
+      const cell2 = document.createElement('td');
+      cell1.textContent = `Trapezoid ${index + 1}`;
+      cell2.textContent = area.toFixed(3);
+      row.appendChild(cell1);
+      row.appendChild(cell2);
       resultTableBody.appendChild(row);
     });
 
-    totalAreaSpan.textContent = totalArea.toString();
+    totalAreaSpan.textContent = totalArea.toFixed(3);
   }
+
 
 }

@@ -15,7 +15,6 @@
  * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
  */
 
-import { Calculator } from "./calculator";
 import { Model } from "./model";
 import { View } from "./view";
 import * as math from 'mathjs';
@@ -72,30 +71,10 @@ export class Controller {
 
   private updateView = (expression: string, numberOfTrapezoids: number, start: number, end: number): void => {
     this.view.draw(expression, numberOfTrapezoids, start, end);
-    this.displayCalculationResult();
+    const areas = this.model.calculateAreas();
+    const totalArea = areas.reduce((acc, curr) => acc + curr, 0);
+    this.view.updateCalculationResultTable(areas, totalArea);
+    // this.view.drawTrapezoids(numberOfTrapezoids, start, end, areas);
   }
 
-  private displayCalculationResult(): void {
-    const resultTableBody = document.getElementById('calculationTableBody');
-    const totalAreaSpan = document.getElementById('totalArea');
-    if (!resultTableBody || !totalAreaSpan) return;
-
-    let totalArea = 0;
-    resultTableBody.innerHTML = '';
-
-    for (let i = 1; i <= this.model.getNumberOfTrapezoids(); i++) {
-      const xi0 = this.model.getStart() + (i - 1) * (this.model.getEnd() - this.model.getStart()) / this.model.getNumberOfTrapezoids();
-      const xi1 = this.model.getStart() + i * (this.model.getEnd() - this.model.getStart()) / this.model.getNumberOfTrapezoids();
-      const yi0 = math.evaluate(this.model.getExpression(), { x: xi0 });
-      const yi1 = math.evaluate(this.model.getExpression(), { x: xi1 });
-      const area = (yi0 + yi1) * (xi1 - xi0) / 2;
-      totalArea += area;
-
-      const row = document.createElement('tr');
-      row.innerHTML = `<td>Trapezoid ${i}</td><td>${area}</td>`;
-      resultTableBody.appendChild(row);
-    }
-
-    totalAreaSpan.textContent = totalArea.toString();
-  }
 }
