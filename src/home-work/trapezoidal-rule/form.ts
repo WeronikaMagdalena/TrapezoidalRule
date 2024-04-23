@@ -11,7 +11,7 @@ export class Form {
     this.setupEventListeners();
   }
 
-  private setupEventListeners(): void {
+  public setupEventListeners(): void {
     const inputForm = document.getElementById('inputForm') as HTMLFormElement;
     inputForm.addEventListener('submit', (event) => {
       event.preventDefault();

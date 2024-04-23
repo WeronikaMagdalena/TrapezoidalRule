@@ -1,14 +1,32 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Programación de Aplicaciones Interactivas
+ *
+ * @author Weronika Wójcik
+ * @since 21 04 2024
+ * @description MVC Trapezoidal Rule Calculator
+ * View:
+ *  The application's user interface
+ *  It is responsible for displaying data to the user and capturing user interactions
+ *  No logic
+ *  Data presentation and user interaction
+ * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
+ */
+
+import * as math from "mathjs";
 import { Form } from "./form";
 import { Grid } from "./grid";
-import * as math from 'mathjs';
 
 export class View {
   private readonly canvas: HTMLCanvasElement = document.getElementById('graphCanvas') as HTMLCanvasElement;
   private readonly context: CanvasRenderingContext2D = this.canvas.getContext('2d')!;
   private readonly grid: Grid = new Grid();
+  private readonly form: Form = new Form();
 
   constructor() {
-    new Form();
+    this.form.setupEventListeners();
   }
 
   public draw(expression: string, numberOfTrapezoids: number, start: number, end: number): void {
@@ -32,6 +50,22 @@ export class View {
       const canvasY = this.canvas.height - ((y + yOffset) * scaleY);
       this.context.fillRect(canvasX, canvasY, 1, 1);
     }
+  }
+
+  updateCalculationResultTable(areas: number[], totalArea: number): void {
+    const resultTableBody = document.getElementById('calculationTableBody');
+    const totalAreaSpan = document.getElementById('totalArea');
+    if (!resultTableBody || !totalAreaSpan) return;
+
+    resultTableBody.innerHTML = '';
+
+    areas.forEach((area, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>Trapezoid ${index + 1}</td><td>${area}</td>`;
+      resultTableBody.appendChild(row);
+    });
+
+    totalAreaSpan.textContent = totalArea.toString();
   }
 
 }
