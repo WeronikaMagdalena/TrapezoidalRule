@@ -43,6 +43,35 @@ export class View {
     const range = Math.max(maxY - minY, 0.0001);
     const yOffset = Math.abs(minY);
     const scaleY = this.canvas.height / range;
+
+    // Calculate x-step size for each trapezoid
+    const xStep = (end - start) / numberOfTrapezoids;
+
+    // Draw trapezoids
+    for (let i = 0; i < numberOfTrapezoids; i++) {
+      const x1 = start + i * xStep;
+      const x2 = x1 + xStep;
+      const y1 = math.evaluate(expression, { x: x1 });
+      const y2 = math.evaluate(expression, { x: x2 });
+
+      // Calculate canvas coordinates
+      const canvasX1 = (x1 - start) * (this.canvas.width / (end - start));
+      const canvasX2 = (x2 - start) * (this.canvas.width / (end - start));
+      const canvasY1 = this.canvas.height - ((y1 + yOffset) * scaleY);
+      const canvasY2 = this.canvas.height - ((y2 + yOffset) * scaleY);
+
+      // Draw trapezoid
+      this.context.fillStyle = 'rgba(255, 0, 0, 0.5)';
+      this.context.beginPath();
+      this.context.moveTo(canvasX1, canvasY1);
+      this.context.lineTo(canvasX2, canvasY2);
+      this.context.lineTo(canvasX2, this.canvas.height);
+      this.context.lineTo(canvasX1, this.canvas.height);
+      this.context.closePath();
+      this.context.fill();
+    }
+
+    // Draw function curve
     this.context.fillStyle = 'blue';
     for (let x = start; x <= end; x += step) {
       const y = math.evaluate(expression, { x: x });
@@ -51,6 +80,7 @@ export class View {
       this.context.fillRect(canvasX, canvasY, 1, 1);
     }
   }
+
 
   public updateCalculationResultTable(areas: number[], totalArea: number): void {
     const resultTableBody = document.getElementById('calculationTableBody');
