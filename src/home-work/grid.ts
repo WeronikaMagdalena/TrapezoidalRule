@@ -1,14 +1,37 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Programación de Aplicaciones Interactivas
+ *
+ * @author Weronika Wójcik
+ * @since 21 04 2024
+ * @description MVC Trapezoidal Rule Calculator
+ * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
+ */
+
 export class Grid {
   private gridStrokeStyle: string;
   private labelFont: string;
   private labelColor: string;
 
+  /**
+   * Initializes the Grid instance with default styles.
+   */
   constructor() {
     this.gridStrokeStyle = 'lightgrey';
     this.labelFont = '10px Arial';
     this.labelColor = 'black';
   }
 
+  /**
+   * Draws the grid lines and labels on the graph canvas.
+   * @param context - The canvas rendering context.
+   * @param minX - The minimum x-value of the graph.
+   * @param maxX - The maximum x-value of the graph.
+   * @param minY - The minimum y-value of the graph.
+   * @param maxY - The maximum y-value of the graph.
+   */
   public draw(context: CanvasRenderingContext2D, minX: number, maxX: number, minY: number, maxY: number): void {
     const canvasWidth = context.canvas.width;
     const canvasHeight = context.canvas.height;
@@ -43,6 +66,13 @@ export class Grid {
     }
   }
 
+  /**
+   * Calculates the grid step size based on the range and canvas length.
+   * @param min - The minimum value of the range.
+   * @param max - The maximum value of the range.
+   * @param length - The length of the canvas.
+   * @returns The calculated grid step size.
+   */
   private calculateGridStep(min: number, max: number, length: number): number {
     const range = max - min;
     const numberOfSteps = 10;

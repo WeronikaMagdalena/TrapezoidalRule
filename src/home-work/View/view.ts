@@ -16,19 +16,33 @@
  */
 
 import * as math from "mathjs";
-import { Form } from "./form";
-import { Grid } from "./grid";
+import { Form } from "../form";
+import { Grid } from "../grid";
 
+/**
+ * View class responsible for rendering the graph and updating the calculation result table.
+ */
 export class View {
   private readonly canvas: HTMLCanvasElement = document.getElementById('graphCanvas') as HTMLCanvasElement;
   private readonly context: CanvasRenderingContext2D = this.canvas.getContext('2d')!;
   private readonly grid: Grid = new Grid();
   private readonly form: Form = new Form();
 
+  /**
+   * Initializes the View instance.
+   * Sets up event listeners for the form.
+   */
   constructor() {
     this.form.setupEventListeners();
   }
 
+  /**
+   * Draws the graph based on the provided expression and integration parameters.
+   * @param expression - The mathematical expression to be plotted.
+   * @param numberOfTrapezoids - The number of trapezoids for integration.
+   * @param start - The start value of the interval.
+   * @param end - The end value of the interval.
+   */
   public draw(expression: string, numberOfTrapezoids: number, start: number, end: number): void {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     let minY = Infinity;
@@ -81,7 +95,11 @@ export class View {
     }
   }
 
-
+  /**
+   * Updates the calculation result table with the areas of individual trapezoids and the total area.
+   * @param areas - An array containing the areas of individual trapezoids.
+   * @param totalArea - The total area under the curve.
+   */
   public updateCalculationResultTable(areas: number[], totalArea: number): void {
     const resultTableBody = document.getElementById('calculationTableBody');
     const totalAreaSpan = document.getElementById('totalArea');
@@ -102,6 +120,4 @@ export class View {
 
     totalAreaSpan.textContent = totalArea.toFixed(3);
   }
-
-
 }

@@ -16,7 +16,7 @@
 
 import { Controller } from './controller';
 import { Model } from './model';
-import { View } from './view';
+import { View } from './View/view';
 
 function main(): void {
   const model = new Model();

@@ -17,6 +17,13 @@
 import * as math from "mathjs";
 
 export class Model {
+  /**
+   * Initializes the Model instance with default values.
+   * @param expression - The mathematical expression.
+   * @param numberOfTrapezoids - The number of trapezoids for integration.
+   * @param start - The start value of the interval.
+   * @param end - The end value of the interval.
+   */
   constructor(
     public expression: string = 'x^2',
     public numberOfTrapezoids: number = 4,
@@ -24,38 +31,74 @@ export class Model {
     public end: number = 2
   ) { }
 
+  /**
+   * Gets the current mathematical expression.
+   * @returns The mathematical expression.
+   */
   public getExpression(): string {
     return this.expression;
   }
 
+  /**
+   * Gets the current number of trapezoids for integration.
+   * @returns The number of trapezoids.
+   */
   public getNumberOfTrapezoids(): number {
     return this.numberOfTrapezoids;
   }
 
+  /**
+   * Gets the start value of the integration interval.
+   * @returns The start value of the interval.
+   */
   public getStart(): number {
     return this.start;
   }
 
+  /**
+   * Gets the end value of the integration interval.
+   * @returns The end value of the interval.
+   */
   public getEnd(): number {
     return this.end;
   }
 
+  /**
+   * Sets the mathematical expression.
+   * @param value - The new mathematical expression.
+   */
   public setExpression(value: string): void {
     this.expression = value;
   }
 
+  /**
+   * Sets the number of trapezoids for integration.
+   * @param value - The new number of trapezoids.
+   */
   public setNumberOfTrapezoids(value: number): void {
     this.numberOfTrapezoids = value;
   }
 
+  /**
+   * Sets the start value of the integration interval.
+   * @param value - The new start value of the interval.
+   */
   public setStart(value: number): void {
     this.start = value;
   }
 
+  /**
+   * Sets the end value of the integration interval.
+   * @param value - The new end value of the interval.
+   */
   public setEnd(value: number): void {
     this.end = value;
   }
 
+  /**
+   * Calculates the areas of individual trapezoids for the current integration settings.
+   * @returns An array containing the areas of individual trapezoids.
+   */
   calculateAreas(): number[] {
     const areas: number[] = [];
     for (let i = 1; i <= this.getNumberOfTrapezoids(); i++) {

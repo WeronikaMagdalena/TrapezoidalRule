@@ -16,27 +16,26 @@
  */
 
 import { Model } from "./model";
-import { View } from "./view";
-import * as math from 'mathjs';
+import { View } from "./View/view";
 
 export class Controller {
-
+  /**
+   * Initializes the controller with the provided model and view.
+   * Also initializes event handling and updates the initial view state.
+   * @param model - The model instance.
+   * @param view - The view instance.
+   */
   constructor(private model: Model, private view: View) {
     this.model = model;
     this.view = view;
     this.init();
   }
 
-  private init(): void {
-    this.handleEvents();
-    this.updateView(
-      this.model.getExpression(),
-      this.model.getNumberOfTrapezoids(),
-      this.model.getStart(),
-      this.model.getEnd()
-    );
-  }
-
+  /**
+   * Initializes event handling for user interactions.
+   * Listens for 'input-changed' events from the view.
+   * Upon receiving an event, updates the model and the view accordingly.
+   */
   private handleEvents(): void {
     document.addEventListener('input-changed', (event: Event) => {
       const customEvent = event as CustomEvent;
@@ -52,6 +51,11 @@ export class Controller {
     });
   }
 
+  /**
+   * Updates the model based on the provided action and value.
+   * @param action - The action to perform on the model.
+   * @param value - The value associated with the action.
+   */
   private updateModel(action: string, value: string): void {
     switch (action) {
       case 'setExpression':
@@ -69,12 +73,31 @@ export class Controller {
     }
   }
 
+  /**
+   * Updates the view with the provided expression, number of trapezoids, start, and end values.
+   * Calculates the areas using the model and updates the view with the result.
+   * @param expression - The mathematical expression.
+   * @param numberOfTrapezoids - The number of trapezoids for integration.
+   * @param start - The start value of the interval.
+   * @param end - The end value of the interval.
+   */
   private updateView = (expression: string, numberOfTrapezoids: number, start: number, end: number): void => {
     this.view.draw(expression, numberOfTrapezoids, start, end);
     const areas = this.model.calculateAreas();
     const totalArea = areas.reduce((acc, curr) => acc + curr, 0);
     this.view.updateCalculationResultTable(areas, totalArea);
-    // this.view.drawTrapezoids(numberOfTrapezoids, start, end, areas);
   }
 
+  /**
+   * Initializes the controller by setting up event handling and updating the initial view state.
+   */
+  private init(): void {
+    this.handleEvents();
+    this.updateView(
+      this.model.getExpression(),
+      this.model.getNumberOfTrapezoids(),
+      this.model.getStart(),
+      this.model.getEnd()
+    );
+  }
 }
