@@ -14,8 +14,8 @@
  * Main function that creates the model, view and controller
  */
 
-import { Controller } from './controller';
-import { Model } from './model';
+import { Controller } from './Controller/controller';
+import { Model } from './Model/model';
 import { View } from './View/view';
 
 function main(): void {

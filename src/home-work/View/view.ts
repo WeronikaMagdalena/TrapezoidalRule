@@ -16,8 +16,8 @@
  */
 
 import * as math from "mathjs";
-import { Form } from "../form";
-import { Grid } from "../grid";
+import { Form } from "./form-view";
+import { Grid } from "./grid-view";
 
 /**
  * View class responsible for rendering the graph and updating the calculation result table.
