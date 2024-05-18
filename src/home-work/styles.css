@@ -1,78 +1,13 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-h1 {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
-
-canvas {
-  border: 1px solid #ccc;
-}
-
-#result-container {
-  margin-top: 1rem;
-}
-
-.container {
+.content {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background-color: #f2f2f2;
-  padding: 20px;
 }
 
-.form-container {
-  background-color: #e0e0e0;
-  padding: 20px;
-  border-radius: 10px;
-  margin-left: 20px;
+#form-container {
+  background-color: aqua;
+  width: 15%;
 }
 
-input[type="text"],
-input[type="number"] {
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin: 5px 0;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-input[type="submit"] {
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin: 10px 0;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 5px;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-}
-
-table {
-  width: calc(100% + 20px);
-  /* Make table slightly wider */
-  border-collapse: collapse;
-  margin-top: 20px;
-  /* Add margin at the top for spacing */
-}
-
-th,
-td {
-  padding: 10px;
-  /* Add padding to cells */
-  border: 1px solid #ddd;
-  /* Add border to cells */
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
+#trapezoids-table {
+  background-color: burlywood;
+  width: 15%;
 }

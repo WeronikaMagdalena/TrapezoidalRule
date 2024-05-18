@@ -11,40 +11,25 @@
 
 <body>
   <h1>Trapezoidal Rule Calculator</h1>
-  <a href="index.html">Home</a>
-  <div class="container">
-    <canvas id="graphCanvas" width="900" height="370"></canvas>
-    <div class="form-container">
-      <form id="inputForm">
-        <label for="expression">Expression</label>
-        <input type="text" id="expression" name="expression" value="x^2">
-
-        <label for="numberOfTrapezoids">Number of Trapezoids</label>
-        <input type="number" id="numberOfTrapezoids" name="numberOfTrapezoids" value=4>
-
-        <label for="start">Start</label>
-        <input type="text" id="start" name="start" value=0>
-
-        <label for="end">End</label>
-        <input type="text" id="end" name="end" value=2>
-
-        <input type="submit" id="updateButton" value="Update">
+  <div class="content">
+    <canvas id="graph-canvas" width="900px" height="400px"></canvas>
+    <div id="form-container">
+      <form id="form">
+        <label for="expression">Expression:</label><br>
+        <input type="text" id="expression" name="expression" value="x^2 + 1"><br>
+        <label for="numberOfTrapezoids">Number of trapezoids:</label><br>
+        <input type="number" id="numberOfTrapezoids" name="numberOfTrapezoids" value=4><br>
+        <label for="start">Start:</label><br>
+        <input type="number" id="start" name="start" value=0><br>
+        <label for="end">End:</label><br>
+        <input type="number" id="end" name="end" value=2><br>
+        <button type="submit" id="submit">Submit</button>
       </form>
     </div>
-    <div id="calculationResult">
-      <table id="calculationTable">
-        <thead>
-          <tr>
-            <th>Trapezoid</th>
-            <th>Area</th>
-          </tr>
-        </thead>
-        <tbody id="calculationTableBody">
-        </tbody>
-      </table>
-      <p>Total Area: <span id="totalArea"></span></p>
+    <div id="trapezoids-table">
     </div>
   </div>
+  <a href="index.html">Home</a>
 </body>
 
 </html>

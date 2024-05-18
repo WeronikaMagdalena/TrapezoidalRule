@@ -10,77 +10,92 @@
  * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
  */
 
-export class Grid {
-  private gridStrokeStyle: string;
-  private labelFont: string;
-  private labelColor: string;
+export class GridView {
 
-  /**
-   * Initializes the Grid instance with default styles.
-   */
-  constructor() {
-    this.gridStrokeStyle = 'lightgrey';
-    this.labelFont = '10px Arial';
-    this.labelColor = 'black';
+  draw(canvas: HTMLCanvasElement, start: number, end: number, { minY, maxY }: { minY: number, maxY: number }) {
+    const context = canvas.getContext("2d")!;
+    const margin = 20;
+    const width = canvas.width - 2 * margin;
+    const height = canvas.height - 2 * margin;
+    const xRange = end - start;
+    const yRange = maxY - minY;
+    const xScale = width / xRange;
+    const yScale = height / yRange;
+
+    // Calculate the origin
+    const xOrigin = margin - start * xScale;
+    const yOrigin = height + margin + minY * yScale;
+
+    // Draw horizontal grid lines above and below x-axis
+    const numHorizontalLines = Math.max(6, Math.min(10, Math.round(height / 50))); // Adjust the number of lines based on canvas height
+    const horizontalSpacing = yRange / (numHorizontalLines - 1);
+    for (let i = 0; i < numHorizontalLines; i++) {
+      // Draw lines above x-axis
+      const yAbove = yOrigin - i * horizontalSpacing * yScale;
+      context.beginPath();
+      context.moveTo(margin, yAbove);
+      context.lineTo(width + margin, yAbove);
+      context.lineWidth = 0.5;
+      context.strokeStyle = 'lightgray';
+      context.stroke();
+
+      // Draw lines below x-axis
+      const yBelow = yOrigin + i * horizontalSpacing * yScale;
+      context.beginPath();
+      context.moveTo(margin, yBelow);
+      context.lineTo(width + margin, yBelow);
+      context.lineWidth = 0.5;
+      context.strokeStyle = 'lightgray';
+      context.stroke();
+    }
+
+    // Draw vertical grid lines to the right of y-axis
+    const numVerticalLinesRight = Math.max(6, Math.min(10, Math.round(width / 50))); // Adjust the number of lines based on canvas width
+    const verticalSpacingRight = xRange / (numVerticalLinesRight - 1);
+    for (let i = 0; i < numVerticalLinesRight; i++) {
+      const xRight = xOrigin + i * verticalSpacingRight * xScale;
+      context.beginPath();
+      context.moveTo(xRight, margin);
+      context.lineTo(xRight, height + margin);
+      context.lineWidth = 0.5;
+      context.strokeStyle = 'lightgray';
+      context.stroke();
+    }
+
+    // Draw vertical grid lines to the left of y-axis
+    const numVerticalLinesLeft = Math.max(6, Math.min(10, Math.round(width / 50))); // Adjust the number of lines based on canvas width
+    const verticalSpacingLeft = xRange / (numVerticalLinesLeft - 1);
+    for (let i = 0; i < numVerticalLinesLeft; i++) {
+      const xLeft = xOrigin - i * verticalSpacingLeft * xScale; // Subtract instead of adding
+      context.beginPath();
+      context.moveTo(xLeft, margin);
+      context.lineTo(xLeft, height + margin);
+      context.lineWidth = 0.5;
+      context.strokeStyle = 'lightgray';
+      context.stroke();
+    }
+
+    // Draw x-axis if it is within the visible range
+    if (minY <= 0 && maxY >= 0) {
+      const yZero = yOrigin;
+      context.beginPath();
+      context.moveTo(margin, yZero);
+      context.lineTo(width + margin, yZero);
+      context.lineWidth = 2;
+      context.strokeStyle = 'darkgrey';
+      context.stroke();
+    }
+
+    // Draw y-axis if it is within the visible range
+    if (start <= 0 && end >= 0) {
+      const xZero = xOrigin;
+      context.beginPath();
+      context.moveTo(xZero, margin);
+      context.lineTo(xZero, height + margin);
+      context.lineWidth = 2;
+      context.strokeStyle = 'darkgrey';
+      context.stroke();
+    }
   }
 
-  /**
-   * Draws the grid lines and labels on the graph canvas.
-   * @param context - The canvas rendering context.
-   * @param minX - The minimum x-value of the graph.
-   * @param maxX - The maximum x-value of the graph.
-   * @param minY - The minimum y-value of the graph.
-   * @param maxY - The maximum y-value of the graph.
-   */
-  public draw(context: CanvasRenderingContext2D, minX: number, maxX: number, minY: number, maxY: number): void {
-    const canvasWidth = context.canvas.width;
-    const canvasHeight = context.canvas.height;
-    const yStep = this.calculateGridStep(minY, maxY, canvasHeight);
-    context.strokeStyle = this.gridStrokeStyle;
-    context.beginPath();
-    for (let y = minY + yStep; y < maxY; y += yStep) {
-      const canvasY = canvasHeight - ((y - minY) / (maxY - minY) * canvasHeight);
-      context.moveTo(0, canvasY);
-      context.lineTo(canvasWidth, canvasY);
-    }
-    context.stroke();
-    const xStep = this.calculateGridStep(minX, maxX, canvasWidth);
-    context.beginPath();
-    for (let x = minX + xStep; x < maxX; x += xStep) {
-      const canvasX = (x - minX) / (maxX - minX) * canvasWidth;
-      context.moveTo(canvasX, 0);
-      context.lineTo(canvasX, canvasHeight);
-    }
-    context.stroke();
-    context.font = this.labelFont;
-    context.fillStyle = this.labelColor;
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-    for (let y = minY + yStep; y < maxY; y += yStep) {
-      const canvasY = canvasHeight - ((y - minY) / (maxY - minY) * canvasHeight);
-      context.fillText(y.toFixed(2), 30, canvasY);
-    }
-    for (let x = minX + xStep; x < maxX; x += xStep) {
-      const canvasX = (x - minX) / (maxX - minX) * canvasWidth;
-      context.fillText(x.toFixed(2), canvasX, canvasHeight - 10);
-    }
-  }
-
-  /**
-   * Calculates the grid step size based on the range and canvas length.
-   * @param min - The minimum value of the range.
-   * @param max - The maximum value of the range.
-   * @param length - The length of the canvas.
-   * @returns The calculated grid step size.
-   */
-  private calculateGridStep(min: number, max: number, length: number): number {
-    const range = max - min;
-    const numberOfSteps = 10;
-    const idealStep = range / numberOfSteps;
-    const exponent = Math.floor(Math.log10(idealStep));
-    const factor = Math.pow(10, exponent);
-    const rounded = Math.ceil(idealStep / factor) * factor;
-    const step = rounded.toFixed(10);
-    return parseFloat(step);
-  }
 }

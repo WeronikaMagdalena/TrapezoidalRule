@@ -7,97 +7,53 @@
  * @author Weronika Wójcik
  * @since 21 04 2024
  * @description MVC Trapezoidal Rule Calculator
- * Controller:
- *  Intermediary between the model and the view
- *  Recieves user interactions through the view
- *  Processes these interactions (requests to the model)
- *  Updates the view
  * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
  */
 
-import { Model } from "../Model/model";
+import { CalculatorModel } from "../Model/model";
 import { View } from "../View/view";
 
 export class Controller {
-  /**
-   * Initializes the controller with the provided model and view.
-   * Also initializes event handling and updates the initial view state.
-   * @param model - The model instance.
-   * @param view - The view instance.
-   */
-  constructor(private model: Model, private view: View) {
+
+  constructor(private model: CalculatorModel, private view: View) {
     this.model = model;
     this.view = view;
     this.init();
   }
 
-  /**
-   * Initializes event handling for user interactions.
-   * Listens for 'input-changed' events from the view.
-   * Upon receiving an event, updates the model and the view accordingly.
-   */
+  private init(): void {
+    this.updateView();
+    this.handleEvents();
+  }
+
+  private updateView = (): void => {
+    this.view.draw(this.model.getFunctionModel().plotFunction(),
+      this.model.getFunctionModel().getStart(),
+      this.model.getFunctionModel().getEnd(),
+      this.model.getFunctionModel().calculateMinMax());
+    console.log(this.model.getFunctionModel().getExpression() + ' [' + this.model.getFunctionModel().getStart() + ', ' + this.model.getFunctionModel().getEnd() + ']');
+  }
+
   private handleEvents(): void {
-    document.addEventListener('input-changed', (event: Event) => {
-      const customEvent = event as CustomEvent;
-      const action = customEvent.detail.action;
-      const value = customEvent.detail.value;
-      this.updateModel(action, value);
-      this.updateView(
-        this.model.getExpression(),
-        this.model.getNumberOfTrapezoids(),
-        this.model.getStart(),
-        this.model.getEnd()
-      );
+    document.addEventListener("DOMContentLoaded", () => {
+      const submitButton = document.getElementById("submit") as HTMLButtonElement;
+      submitButton.addEventListener("click", (event: Event) => {
+        event.preventDefault();
+        const expression = (document.getElementById("expression") as HTMLInputElement).value;
+        const numberOfTrapezoids = (document.getElementById("numberOfTrapezoids") as HTMLInputElement).valueAsNumber;
+        const start = (document.getElementById("start") as HTMLInputElement).valueAsNumber;
+        const end = (document.getElementById("end") as HTMLInputElement).valueAsNumber;
+        this.updateModel(expression, numberOfTrapezoids, start, end);
+        this.updateView();
+      });
     });
   }
 
-  /**
-   * Updates the model based on the provided action and value.
-   * @param action - The action to perform on the model.
-   * @param value - The value associated with the action.
-   */
-  private updateModel(action: string, value: string): void {
-    switch (action) {
-      case 'setExpression':
-        this.model.setExpression(value);
-        break;
-      case 'setNumberOfTrapezoids':
-        this.model.setNumberOfTrapezoids(parseFloat(value));
-        break;
-      case 'setStart':
-        this.model.setStart(parseFloat(value));
-        break;
-      case 'setEnd':
-        this.model.setEnd(parseFloat(value));
-        break;
-    }
+  private updateModel(expression: string, noOfTrapezoids: number, start: number, end: number): void {
+    this.model.getFunctionModel().setExpression(expression);
+    this.model.setNumberOfTrapezoids(noOfTrapezoids);
+    this.model.getFunctionModel().setStart(start);
+    this.model.getFunctionModel().setEnd(end);
   }
 
-  /**
-   * Updates the view with the provided expression, number of trapezoids, start, and end values.
-   * Calculates the areas using the model and updates the view with the result.
-   * @param expression - The mathematical expression.
-   * @param numberOfTrapezoids - The number of trapezoids for integration.
-   * @param start - The start value of the interval.
-   * @param end - The end value of the interval.
-   */
-  private updateView = (expression: string, numberOfTrapezoids: number, start: number, end: number): void => {
-    this.view.draw(expression, numberOfTrapezoids, start, end);
-    const areas = this.model.calculateAreas();
-    const totalArea = areas.reduce((acc, curr) => acc + curr, 0);
-    this.view.updateCalculationResultTable(areas, totalArea);
-  }
-
-  /**
-   * Initializes the controller by setting up event handling and updating the initial view state.
-   */
-  private init(): void {
-    this.handleEvents();
-    this.updateView(
-      this.model.getExpression(),
-      this.model.getNumberOfTrapezoids(),
-      this.model.getStart(),
-      this.model.getEnd()
-    );
-  }
 }

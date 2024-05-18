@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './src/home-work/trapezoidal-rule/main.ts',
+  entry: './src/home-work/main',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, './src/home-work/trapezoidal-rule'),
+    path: path.resolve(__dirname, './src/home-work'),
   },
   module: {
     rules: [

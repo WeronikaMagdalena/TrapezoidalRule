@@ -10,16 +10,16 @@
  * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
  */
 
+import { Controller } from "./Controller/controller";
+import { CalculatorModel } from "./Model/model";
+import { View } from "./View/view";
+
 /**
  * Main function that creates the model, view and controller
  */
 
-import { Controller } from './Controller/controller';
-import { Model } from './Model/model';
-import { View } from './View/view';
-
 function main(): void {
-  const model = new Model();
+  const model = new CalculatorModel();
   const view = new View();
   new Controller(model, view);
 }
