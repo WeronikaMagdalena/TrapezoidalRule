@@ -64,6 +64,15 @@ export class TrapezoidsView {
       context.arc(startX, startY, 4, 0, 2 * Math.PI);
       context.fill();
       context.closePath();
+
+      // Draw dashed line from red point to xAxis
+      context.beginPath();
+      context.setLineDash([5, 5]); // Set dash pattern
+      context.moveTo(startX, startY);
+      context.lineTo(startX, xAxis);
+      context.stroke();
+      context.closePath();
+      context.setLineDash([]);
     }
 
     // Draw the last point
