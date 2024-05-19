@@ -25,7 +25,7 @@ export class View {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.grid.draw(this.canvas, start, end, { minY, maxY });
     this.function.draw(this.canvas, { x, y }, start, end, { minY, maxY });
-    this.trapezoids.draw(this.canvas, 4, { x, y }, start, end, { minY, maxY });
+    this.trapezoids.draw(this.canvas, numberOfTrapezoids, { x, y }, start, end, { minY, maxY });
   }
 
 }

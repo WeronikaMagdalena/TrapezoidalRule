@@ -78,7 +78,7 @@ export class FunctionModel {
   plotFunction() {
     const xValues: number[] = [];
     const yValues: number[] = [];
-    for (let x = this.start; x <= this.end + 0.01; x += 0.05) {
+    for (let x = this.start; x <= this.end + 0.01; x += 0.01) {
       xValues.push(x);
       const y = math.evaluate(this.expression, { x });
       yValues.push(y);
