@@ -11,25 +11,22 @@
  */
 
 import { FunctionModel } from "./function-model";
+import { TrapezoidsModel } from "./trapezoids-model";
 
 export class CalculatorModel {
   private functionModel: FunctionModel = new FunctionModel();
-  private numberOfTrapezoids: number = 4;
+  private trapezoidsModel: TrapezoidsModel = new TrapezoidsModel();
 
   public getFunctionModel(): FunctionModel {
     return this.functionModel;
   }
 
-  public getNumberOfTrapezoids(): number {
-    return this.numberOfTrapezoids;
+  public getTrapezoidsModel(): TrapezoidsModel {
+    return this.trapezoidsModel;
   }
 
-  public setFunctionModel(expression: string, numberOfTrapezoids: number, start: number, end: number) {
-    this.functionModel = new FunctionModel(expression, numberOfTrapezoids, start, end);
-  }
-
-  public setNumberOfTrapezoids(value: number): void {
-    this.numberOfTrapezoids = value;
+  public setFunctionModel(expression: string, start: number, end: number) {
+    this.functionModel = new FunctionModel(expression, start, end);
   }
 
 }

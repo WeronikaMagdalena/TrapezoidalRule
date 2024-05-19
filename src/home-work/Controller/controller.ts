@@ -30,7 +30,8 @@ export class Controller {
     this.view.draw(this.model.getFunctionModel().plotFunction(),
       this.model.getFunctionModel().getStart(),
       this.model.getFunctionModel().getEnd(),
-      this.model.getFunctionModel().calculateMinMax());
+      this.model.getFunctionModel().calculateMinMax(),
+      this.model.getTrapezoidsModel().getNumberOfTrapezoids());
     console.log(this.model.getFunctionModel().getExpression() + ' [' + this.model.getFunctionModel().getStart() + ', ' + this.model.getFunctionModel().getEnd() + ']');
   }
 
@@ -49,9 +50,9 @@ export class Controller {
     });
   }
 
-  private updateModel(expression: string, noOfTrapezoids: number, start: number, end: number): void {
+  private updateModel(expression: string, numberOfTrapezoids: number, start: number, end: number): void {
     this.model.getFunctionModel().setExpression(expression);
-    this.model.setNumberOfTrapezoids(noOfTrapezoids);
+    this.model.getTrapezoidsModel().setNumberOfTrapezoids(numberOfTrapezoids);
     this.model.getFunctionModel().setStart(start);
     this.model.getFunctionModel().setEnd(end);
   }

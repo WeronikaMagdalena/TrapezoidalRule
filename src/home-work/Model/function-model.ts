@@ -13,9 +13,18 @@
 import * as math from "mathjs";
 
 export class FunctionModel {
+  private expression: string;
+  private start: number;
+  private end: number;
 
-  constructor(private expression: string = 'x^2 + 1', private numberOfTrapezoids: number = 4, private start: number = 0, private end: number = 2,) {
-
+  constructor(
+    expression: string = 'x^2 + 1',
+    start: number = 0,
+    end: number = 2
+  ) {
+    this.expression = expression;
+    this.start = start;
+    this.end = end;
   }
 
   /**
@@ -69,7 +78,7 @@ export class FunctionModel {
   plotFunction() {
     const xValues: number[] = [];
     const yValues: number[] = [];
-    for (let x = this.start; x <= this.end; x += 0.05) {
+    for (let x = this.start; x <= this.end + 0.05; x += 0.05) {
       xValues.push(x);
       const y = math.evaluate(this.expression, { x });
       yValues.push(y);

@@ -12,18 +12,20 @@
 
 import { GridView } from "./grid-view";
 import { FunctionView } from "./function-view";
-import { number } from "mathjs";
+import { TrapezoidsView } from "./trapezoids-view";
 
 export class View {
   private readonly canvas: HTMLCanvasElement = document.getElementById('graph-canvas') as HTMLCanvasElement;
   private readonly context: CanvasRenderingContext2D = this.canvas.getContext('2d')!;
   private readonly grid: GridView = new GridView();
   private readonly function: FunctionView = new FunctionView();
+  private readonly trapezoids: TrapezoidsView = new TrapezoidsView();
 
-  draw({ x, y }: { x: number[], y: number[] }, start: number, end: number, { minY, maxY }: { minY: number, maxY: number }) {
+  draw({ x, y }: { x: number[], y: number[] }, start: number, end: number, { minY, maxY }: { minY: number, maxY: number }, numberOfTrapezoids: number) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.grid.draw(this.canvas, start, end, { minY, maxY });
     this.function.draw(this.canvas, { x, y }, start, end, { minY, maxY });
+    this.trapezoids.draw(this.canvas, 4);
   }
 
 }

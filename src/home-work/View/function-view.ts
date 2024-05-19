@@ -21,7 +21,7 @@ export class FunctionView {
     const scaleY = height / (maxY - minY);
     context.beginPath();
     context.moveTo((x[0] - minX) * scaleX + margin, height - (y[0] - minY) * scaleY + margin);
-    for (let i = 0; i <= x.length; i++) {
+    for (let i = 0; i < x.length; i++) {
       context.lineTo((x[i] - minX) * scaleX + margin, height - (y[i] - minY) * scaleY + margin);
     }
     context.lineWidth = 2;

@@ -32,6 +32,7 @@ export class GridView {
     for (let i = 0; i < numHorizontalLines; i++) {
       // Draw lines above x-axis
       const yAbove = yOrigin - i * horizontalSpacing * yScale;
+      // context.fillText((start + yRange / numHorizontalLines * i).toString(), margin / 2, yAbove);
       context.beginPath();
       context.moveTo(margin, yAbove);
       context.lineTo(width + margin, yAbove);
