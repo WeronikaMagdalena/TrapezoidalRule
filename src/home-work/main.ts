@@ -15,9 +15,10 @@ import { CalculatorModel } from "./Model/model";
 import { View } from "./View/view";
 
 /**
- * Main function that creates the model, view and controller
+ * Entry point for the MVC Trapezoidal Rule Calculator application.
+ * This module initializes the model, view, and controller.
+ * @function
  */
-
 function main(): void {
   const model = new CalculatorModel();
   const view = new View();

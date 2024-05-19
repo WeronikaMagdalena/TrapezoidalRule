@@ -6,15 +6,33 @@
  *
  * @author Weronika Wójcik
  * @since 21 04 2024
- * @description MVC Trapezoidal Rule Calculator
+ * @module GridView
+ * @description View class for drawing the grid on a canvas in the MVC Trapezoidal Rule Calculator.
  * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
  */
 
 import { round } from "mathjs";
 
+/**
+ * GridView class that manages the drawing of the grid on the HTML canvas element.
+ */
 export class GridView {
 
-  draw(canvas: HTMLCanvasElement, start: number, end: number, { minY, maxY }: { minY: number, maxY: number }) {
+  /**
+   * Draws the grid on the canvas.
+   * @param {HTMLCanvasElement} canvas - The canvas element to draw on.
+   * @param {number} start - The start value of the x-axis.
+   * @param {number} end - The end value of the x-axis.
+   * @param {Object} minMaxY - The minimum and maximum y values.
+   * @param {number} minMaxY.minY - The minimum y value.
+   * @param {number} minMaxY.maxY - The maximum y value.
+   */
+  draw(
+    canvas: HTMLCanvasElement,
+    start: number,
+    end: number,
+    { minY, maxY }: { minY: number, maxY: number }
+  ): void {
     const context = canvas.getContext("2d")!;
     const margin = 20;
     const width = canvas.width - 2 * margin;
@@ -105,5 +123,4 @@ export class GridView {
     context.fillText(start.toString(), margin, height + margin * 1.6);
     context.fillText(end.toString(), margin + width, height + margin * 1.6);
   }
-
 }

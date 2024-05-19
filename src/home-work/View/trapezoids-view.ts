@@ -5,14 +5,37 @@
  * Programación de Aplicaciones Interactivas
  *
  * @author Weronika Wójcik
- * @since 21 04 2024
- * @description MVC Trapezoidal Rule Calculator
+ * @module TrapezoidsView
+ * @description View class for drawing trapezoids on a canvas in the MVC Trapezoidal Rule Calculator.
  * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
  */
 
+/**
+ * TrapezoidsView class that manages the drawing of trapezoids on the HTML canvas element.
+ */
 export class TrapezoidsView {
 
-  draw(canvas: HTMLCanvasElement, numberOfTrapezoids: number, { x, y }: { x: number[], y: number[] }, minX: number, maxX: number, { minY, maxY }: { minY: number, maxY: number }) {
+  /**
+   * Draws the trapezoids on the canvas.
+   * @param {HTMLCanvasElement} canvas - The canvas element to draw on.
+   * @param {number} numberOfTrapezoids - The number of trapezoids to draw.
+   * @param {Object} xy - The x and y coordinates of the function points.
+   * @param {number[]} xy.x - The x coordinates of the function points.
+   * @param {number[]} xy.y - The y coordinates of the function points.
+   * @param {number} minX - The minimum x value.
+   * @param {number} maxX - The maximum x value.
+   * @param {Object} minMaxY - The minimum and maximum y values.
+   * @param {number} minMaxY.minY - The minimum y value.
+   * @param {number} minMaxY.maxY - The maximum y value.
+   */
+  draw(
+    canvas: HTMLCanvasElement,
+    numberOfTrapezoids: number,
+    { x, y }: { x: number[], y: number[] },
+    minX: number,
+    maxX: number,
+    { minY, maxY }: { minY: number, maxY: number }
+  ): void {
     const margin = 20;
     const width = canvas.width - 2 * margin;
     const height = canvas.height - 2 * margin;
@@ -68,5 +91,4 @@ export class TrapezoidsView {
     context.arc(margin + width, height - (y[y.length - 1] - minY) * scaleY + margin, 4, 0, 2 * Math.PI);
     context.fill();
   }
-
 }
