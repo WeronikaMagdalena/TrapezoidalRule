@@ -31,7 +31,8 @@ export class Controller {
       this.model.getFunctionModel().getStart(),
       this.model.getFunctionModel().getEnd(),
       this.model.getFunctionModel().calculateMinMax(),
-      this.model.getTrapezoidsModel().getNumberOfTrapezoids());
+      this.model.getTrapezoidsModel().getNumberOfTrapezoids(),
+      this.model.getTrapezoidsModel().getTotalArea());
     console.log(this.model.getFunctionModel().getExpression() + ' [' + this.model.getFunctionModel().getStart() + ', ' + this.model.getFunctionModel().getEnd() + ']');
   }
 
@@ -55,6 +56,7 @@ export class Controller {
     this.model.getTrapezoidsModel().setNumberOfTrapezoids(numberOfTrapezoids);
     this.model.getFunctionModel().setStart(start);
     this.model.getFunctionModel().setEnd(end);
+    this.model.getTrapezoidsModel().setTotalArea(this.model.getTrapezoidsModel().calculateArea(expression, start, end, numberOfTrapezoids));
   }
 
 }

@@ -21,8 +21,10 @@ export class View {
   private readonly function: FunctionView = new FunctionView();
   private readonly trapezoids: TrapezoidsView = new TrapezoidsView();
 
-  draw({ x, y }: { x: number[], y: number[] }, start: number, end: number, { minY, maxY }: { minY: number, maxY: number }, numberOfTrapezoids: number) {
+  draw({ x, y }: { x: number[], y: number[] }, start: number, end: number, { minY, maxY }: { minY: number, maxY: number }, numberOfTrapezoids: number, totalArea: number) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.fillStyle = 'black';
+    this.context.fillText('Total Area: ' + (totalArea).toString(), this.canvas.width / 2 - 10, 10);
     this.grid.draw(this.canvas, start, end, { minY, maxY });
     this.function.draw(this.canvas, { x, y }, start, end, { minY, maxY });
     this.trapezoids.draw(this.canvas, numberOfTrapezoids, { x, y }, start, end, { minY, maxY });

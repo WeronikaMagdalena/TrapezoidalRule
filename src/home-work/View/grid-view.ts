@@ -10,6 +10,8 @@
  * @see {@link https://github.com/ULL-ESIT-PAI-2023-2024/2023-2024_P12-Trapezoidal-Rule-Calculator/blob/main/p12_MVC-TrapezoidalRuleCalculator.md}
  */
 
+import { round } from "mathjs";
+
 export class GridView {
 
   draw(canvas: HTMLCanvasElement, start: number, end: number, { minY, maxY }: { minY: number, maxY: number }) {
@@ -32,7 +34,6 @@ export class GridView {
     for (let i = 0; i < numHorizontalLines; i++) {
       // Draw lines above x-axis
       const yAbove = yOrigin - i * horizontalSpacing * yScale;
-      // context.fillText((start + yRange / numHorizontalLines * i).toString(), margin / 2, yAbove);
       context.beginPath();
       context.moveTo(margin, yAbove);
       context.lineTo(width + margin, yAbove);
@@ -97,6 +98,12 @@ export class GridView {
       context.strokeStyle = 'darkgrey';
       context.stroke();
     }
+
+    context.fillStyle = 'black';
+    context.fillText(round(minY).toString(), margin / 2, height + margin);
+    context.fillText(round(maxY).toString(), margin / 2, margin);
+    context.fillText(start.toString(), margin, height + margin * 1.6);
+    context.fillText(end.toString(), margin + width, height + margin * 1.6);
   }
 
 }

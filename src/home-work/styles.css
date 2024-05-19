@@ -8,16 +8,11 @@ h1 {
 
 #form-container {
   background-color: aqua;
-  width: 15%;
-}
-
-#trapezoids-table {
-  background-color: burlywood;
-  width: 15%;
 }
 
 #form-container {
   padding: 15px;
+  margin-left: 70px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
