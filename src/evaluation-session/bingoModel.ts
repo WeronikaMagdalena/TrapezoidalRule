@@ -51,17 +51,16 @@ export class BingoModel {
 
   public specialResetBoard(): void {
     console.log(this.specialNumber);
-    let numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1];
-    numbers[10] = this.specialNumber;
-    numbers[11] = this.specialNumber;
-    numbers[12] = this.specialNumber;
-    numbers[13] = this.specialNumber;
+    let numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     console.log(numbers);
     if (this.specialNumber != -1) {
       for (let i = 0; i < 42; i++) {
-        let randomIndex = math.floor(math.random(0, 14));
-        console.log("rendom index: " + randomIndex);
-        this.board[i] = numbers[randomIndex];
+        let randomIndex = math.floor(math.random(0, 2));
+        if (randomIndex == 0) {
+          this.board[i] = this.specialNumber;
+        } else {
+          this.board[i] = math.floor(math.random(0, 10));
+        }
       }
     }
   }
