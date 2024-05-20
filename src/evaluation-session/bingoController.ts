@@ -70,6 +70,10 @@ export class BingoController {
     this.view.updateBoard(this.model.getBoard());
   }
 
+
+  /**
+   * Updates the game model.
+   */
   private updateModel(specialNumber: number): void {
     this.model.setSpecialNumber(specialNumber);
     this.model.specialResetBoard();

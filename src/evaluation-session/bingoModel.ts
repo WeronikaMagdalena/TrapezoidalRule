@@ -43,12 +43,18 @@ export class BingoModel {
     return this.board;
   }
 
+  /**
+ * Set the special number
+ */
   public setSpecialNumber(specialNumber: number): void {
     if (specialNumber >= 0 && specialNumber <= 9) {
       this.specialNumber = specialNumber;
     }
   }
 
+  /**
+ * Reset board with a special number.
+ */
   public specialResetBoard(): void {
     console.log(this.specialNumber);
     let numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
