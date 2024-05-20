@@ -1,0 +1,55 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80vh;
+  font-family: sans-serif;
+}
+
+#board {
+  position: relative;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  display: flex;
+}
+
+.tile {
+  width: 60px;
+  font-size: 3.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-border {
+  border-right: 0.05em solid;
+}
+
+.bottom-border {
+  border-bottom: 0.05em solid;
+}
+
+.left-border {
+  border-left: 0.05em solid;
+}
+
+.top-border {
+  border-top: 0.05em solid;
+}
+
+button {
+  margin: 20px;
+}
+
+form {
+  margin: 20px;
+}
+
+#modifications {
+  display: flex;
+}

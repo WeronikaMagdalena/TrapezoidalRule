@@ -9,7 +9,7 @@
     "pull": "git pull",
     "test": "jest",
     "lint:ci": "eslint . --ext .tsx,.ts",
-    "start": "tsc-watch --onSuccess \"node dist/index.js\""
+    "start": "node web-server/app.js"
   },
   "keywords": [
     "PAI"
